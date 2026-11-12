@@ -1,0 +1,37 @@
+# Secrets and machine config. The README lists the settings.
+.env
+.env.*
+
+# Generated projects (scenes, references, downloads, renders)
+projects/
+
+# Portable Blender and other local tools
+tools/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# Desktop app: dependencies and build output
+node_modules/
+ui/dist/
+ui/src-tauri/target/
+ui/src-tauri/gen/
+SceneDirector.exe
+*.log
+
+# Blender scratch
+*.blend1
+
+# OS and editors
+Thumbs.db
+Desktop.ini
+.DS_Store
+.vscode/
+.idea/
+
+# Claude Code local settings (the skill in .claude/skills is tracked)
+.claude/settings.local.json
