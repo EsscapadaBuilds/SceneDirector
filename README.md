@@ -1,22 +1,90 @@
+<div align="center">
+
+<img src="docs/media/icon.png" width="88" alt="SceneDirector icon">
+
 # SceneDirector
 
-A conversational AI director for Blender. You describe a scene or character; the agent
-asks clarifying questions, generates reference images for you to approve (or takes your
-own uploads), then assembles the scene in Blender headlessly, verifies its work with
-screenshots, and animates and renders what you asked for.
+**Describe a scene. Approve the look. Get a Blender render.**
 
-Everything required runs on free tools: free asset libraries, free image generation, free
-LLMs (local or free tier), and Blender itself. The optional Tripo/Meshy image-to-3D
-connectors use paid credits and stay disabled until you add a key.
+A conversational AI director for Blender that turns a sentence into a built,
+lit, animated and rendered 3D scene, using only free tools and CC0 assets.
 
-![A reading corner at dusk, built and rendered by SceneDirector](docs/media/reading-corner.gif)
+[![Release](https://img.shields.io/github/v/release/EsscapadaBuilds/SceneDirector?color=f0893a&label=release)](https://github.com/EsscapadaBuilds/SceneDirector/releases/latest)
+[![License: MIT](https://img.shields.io/badge/license-MIT-f0893a)](LICENSE)
+![Blender 3.6+](https://img.shields.io/badge/Blender-3.6%2B-e87d0d?logo=blender&logoColor=white)
+![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-3776ab?logo=python&logoColor=white)
+![Desktop: Tauri 2](https://img.shields.io/badge/desktop-Tauri%202-24c8db?logo=tauri&logoColor=white)
+![Works with Claude](https://img.shields.io/badge/skill-Claude%20Code-d97757)
+
+[Quick start](#quick-start) ·
+[Desktop app](#desktop-app) ·
+[Claude skill](#claude-as-the-director-skill) ·
+[How it works](#how-the-blender-bridge-works) ·
+[Download](https://github.com/EsscapadaBuilds/SceneDirector/releases/latest)
+
+<img src="docs/media/reading-corner.gif" width="640" alt="A reading corner at dusk, built and rendered by SceneDirector">
+
+<sub>"A cosy reading corner at dusk": reference, assets, build, lighting and this 5-second camera move all came out of one conversation.</sub>
+
+</div>
+
+## What it does
+
+You talk; it directs. SceneDirector asks a few sharp questions, shows concept
+references for your approval, pulls free CC0 models and textures, then writes and runs
+Blender Python headlessly, checking its own work with screenshots before it renders.
+
+- **Nothing is built until you approve the look.** Reference, shot plan, preview and
+  final are explicit approval gates.
+- **It looks at what it made.** After each build step it renders a screenshot,
+  compares it with the approved reference and fixes scale, framing and lighting.
+- **Free end to end.** Poly Haven and ambientCG assets (CC0), free concept images, a
+  local or free-tier LLM, and Blender itself. Paid image-to-3D is optional and off by default.
+- **Blender installs itself.** One setup command downloads a portable, checksum-verified
+  Blender if you do not have one.
+- **Your files stay yours.** Every project is a normal folder with a `scene.blend` you
+  can open and keep editing by hand.
+
+## Three ways to direct
+
+| | How you use it | Who does the thinking |
+|---|---|---|
+| **Desktop app** | Double-click `SceneDirector.exe`: projects, conversation, renders and approvals in one window | Your LLM (local Ollama or a free tier) |
+| **Claude skill** | Ask Claude Code for a scene, or type `/scenedirector` | Claude, so no LLM setup at all |
+| **CLI** | `python cli.py my_film` in a terminal | Your LLM |
+
+All three work on the same project folders, so you can start in one and continue in another.
+
+<div align="center">
+<img src="docs/media/desktop-app.png" width="860" alt="The SceneDirector desktop app: conversation with tool activity and a preview render, with media, assets and approvals in a side panel">
+</div>
+
+## Quick start
+
+```powershell
+git clone https://github.com/EsscapadaBuilds/SceneDirector.git
+cd SceneDirector
+python sd.py setup
+```
+
+Setup installs the one Python package, downloads Blender if you have none, and installs
+the Claude skill. Then pick how you want to work:
+
+```powershell
+python cli.py my_film            # chat in the terminal (needs LLM settings, see Setup)
+```
+
+or download `SceneDirector.exe` from the [latest release](https://github.com/EsscapadaBuilds/SceneDirector/releases/latest) into
+this folder and double-click it, or open the folder in Claude Code and ask for a scene.
+
+## How a project goes
 
 ```
- you ── chat ──► agent ── concept images ──► approval gate
-                   │
-                   ├── free assets (Poly Haven, ambientCG, your uploads)
-                   ├── headless Blender (bpy) ──► screenshot ──► self-review loop
-                   └── preview render ──► approval ──► final render / animation
+ you ── chat ──► director ── concept images ──► approval gate
+                    │
+                    ├── free assets (Poly Haven, ambientCG, your uploads)
+                    ├── headless Blender (bpy) ──► screenshot ──► self-review loop
+                    └── preview render ──► approval ──► final render / animation
 ```
 
 ## Requirements
